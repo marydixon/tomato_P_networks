@@ -1,0 +1,137 @@
+---
+title: "Keystone Taxa"
+author: "MD"
+date: "'r format(Sys.time(), '%b %d, %Y')'"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(agricolae)
+library(Polychrome)
+library(tidyverse)
+library(readxl)
+library(phyloseq)
+```
+
+
+```{r}
+w <- read.csv('data/networkWild.csv')
+key.w <- w %>% 
+  filter(., degree > 6 & weighted.degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+
+t <- read.csv('data/networktrad.csv')
+key.t <- t %>% 
+  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+
+m <- read.csv('data/networkmod.csv')
+key.m <- m %>% 
+  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+
+n <- read.csv('data/networkWhole.csv')
+key <- n %>% 
+  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+
+```
+
+```{r}
+kegg <- read_excel('data/EMU_database.GIBBs.KO.PICRUST2.xlsx', sheet='EMU_database.GIBBs.PICRUSt2', range='B9:BE17565')
+kegg <- kegg %>%
+  mutate_if(is.numeric, replace_na, replace=0)
+
+P.rel <- readRDS('data/P.rel.RDS')
+P.key <- subset_taxa(P.rel, species == 'Peribacillus muralis' | 
+                       species == 'Arthrobacter sp. ZXY-2' | 
+                       species == 'Longimicrobium terrae')
+
+```
+
+```{r}
+
+P.glom <- tax_glom(P.key, taxrank="superkingdom")
+P.glom <- prune_taxa(taxa_sums(P.glom) > 0, P.glom)
+
+d <- psmelt(P.key)
+
+par(mfrow=c(2,2))
+mod <- d %>% 
+  lm(sqrt(Abundance) ~ Fertilization*Domestication/Variety, data = .)
+plot(mod)
+aov.mod <- aov(mod)
+summary(aov.mod)
+ 
+t<- HSD.test(mod, "Domestication");t
+
+
+
+sum.do <- summarize(group_by(d, Domestication, Fertilization),
+                   n=n(),
+                   mean=mean(sqrt(Abundance)),
+                   sd=sd(sqrt(Abundance)),
+                   se=sd/sqrt(n))
+
+
+ggplot(sum.do, aes(x=Domestication,y=mean,fill=Fertilization))+
+  geom_col(position='dodge')+
+  scale_fill_brewer(palette = 'Paired')+
+  geom_errorbar(aes(ymin = mean-se, ymax = mean+se),position=position_dodge(0.9), width = .25)+
+ # ylab(expression(atop("Keystone Taxa Relative Abundance", paste("(Square-Root-Transformed)"))))+
+  labs(y="Keystone Taxa Relative Abundance (Square-Root-Transformed)")+
+  theme(axis.text.x=element_text(size=14, colour = "black", family='Palatino Linotype' ), 
+        axis.text.y=element_text(size=14, colour = "black",family='Palatino Linotype' ),
+        axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank(),
+        legend.text = element_text(size = 24),
+        strip.text.y = element_text(size=8, face="bold"), 
+        legend.title = element_blank(),
+        legend.position = 'none',
+        strip.text = element_blank(),
+        strip.background = element_blank(),
+       axis.title.x = element_blank())
+```
+
+```{r}
+P40 <- createPalette(15, c("#FF0000", "#00FF00", "#0000FF"), range = c(30, 80))
+swatch(P40)
+P40 <- sortByHue(P40)
+P40 <- as.vector(t(matrix(P40, ncol=4)))
+swatch(P40)
+names(P40) <- NULL
+
+k <- read.csv('data/keystone.csv')
+
+
+p<-ggplot(k, aes(x=Species, y=(Function), color=GeneName)) + 
+  geom_point(size = 7) + 
+  scale_color_manual(values = P40)+
+  geom_hline(yintercept = 1.5, color='gray50')+
+  geom_hline(yintercept = 2.5, color='gray50')+
+  geom_hline(yintercept = 3.5, color='gray50')+
+  geom_hline(yintercept = 4.5, color='gray50')+
+  geom_hline(yintercept = 5.5, color='gray50')+
+  geom_hline(yintercept = 6.5, color='gray50')+
+  geom_hline(yintercept = 7.5, color='gray50')+
+  geom_hline(yintercept = 8.5, color='gray50')+
+  geom_hline(yintercept = 9.5, color='gray50')+
+  geom_hline(yintercept = 10.5, color='gray50')+
+  geom_hline(yintercept = 11.5, color='gray50')+
+  theme(axis.text.x = element_text(family = 'serif', color='black'),
+        axis.text.y = element_text( color='black',family = 'serif'),
+        legend.text = element_text( color='black',family='serif'),
+        axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank(),
+        legend.title = element_blank(),
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank());p
+```
+

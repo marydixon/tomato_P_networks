@@ -1,0 +1,112 @@
+---
+title: "Network"
+author: "MD"
+date: "'r format(Sys.time(), '%b %d, %Y')'"
+output: 
+ html_document:
+   toc: true
+   toc_float: true
+   editor_options:
+     chunk_output_type: console
+   chunck_output_type: console
+   chunk_output_type: console
+---
+
+install packages load libraries and load data
+```{r}
+library(chorddiag)
+library(file2meco)
+library(microeco) 
+library(igraph)
+library(rgexf)
+library(RColorBrewer)
+library(phyloseq)
+
+```
+
+Create microtable environmenat from phyloseq data
+```{r}
+P.count <- readRDS('data/P.Count.RDS')
+
+rank <- 'species'
+P.glom <- tax_glom(P.count, taxrank=rank)
+tax_table(P.glom) <- tax_table(P.glom)[,1:7]
+taxa_names(P.glom) <- tax_table(P.glom)[,'species']
+
+dataset <- phyloseq2meco(P.glom)
+dataset
+
+dataset$tidy_dataset()
+dataset$sample_sums() %>% range
+dataset$cal_abund()
+dataset$save_abund(dirpath = "taxa_abund")
+
+
+#subset to include data for each domestication group
+group_W <- clone(dataset)
+group_W$sample_table <- subset(group_W$sample_table, Domestication == "Wild")
+group_W$tidy_dataset()
+group_W
+group_T <- clone(dataset)
+group_T$sample_table <- subset(group_T$sample_table, Domestication == "Traditional")
+group_T$tidy_dataset()
+group_T
+group_M <- clone(dataset)
+group_M$sample_table <- subset(group_M$sample_table, Domestication == "Modern")
+group_M$tidy_dataset()
+group_M
+```
+
+
+
+Generate network for whole dataset
+```{r}
+n <- trans_network$new(dataset = dataset, cor_method = "spearman", filter_thres = 0.001)
+n$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n$cal_module(method = "cluster_fast_greedy")
+n$save_network(filepath = "data/WholeNetworkProject.gefx")
+```
+
+
+
+Generate networks for each domestication group
+```{r}
+n.W <- trans_network$new(dataset = group_W, cor_method = "spearman", filter_thres = 0.001)
+n.W$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
+n.W$cal_module(method = "cluster_fast_greedy")
+n.W$save_network(filepath = "data/networkWildSpecies.gexf")
+
+
+n.T <- trans_network$new(dataset = group_T, cor_method = "spearman", filter_thres = 0.001)
+n.T$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n.T$cal_module(method = "cluster_fast_greedy")
+n.T$save_network(filepath = "data/networkTraditionalSpecies.gexf")
+
+n.M <- trans_network$new(dataset = group_M, cor_method = "spearman", filter_thres = 0.001)
+n.M$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n.M$cal_module(method = "cluster_fast_greedy")
+n.M$save_network(filepath = "data/networkModernSpecies.gexf")
+```
+
+Generate chord diagrams 
+```{r}
+n.W$cal_sum_links(taxa_level = "phylum")
+n.W$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
+
+n.T$cal_sum_links(taxa_level = "phylum")
+n.T$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
+
+n.M$cal_sum_links(taxa_level = "phylum")
+n.M$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
+
+n$cal_sum_links(taxa_level = "phylum")
+n$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
+```
+
+
+
+
+
+
+
+
