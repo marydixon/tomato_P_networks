@@ -21,12 +21,14 @@ library(igraph)
 library(rgexf)
 library(RColorBrewer)
 library(phyloseq)
-
 ```
 
-Create microtable environmenat from phyloseq data
+
 ```{r}
-P.count <- readRDS('data/P.Count.RDS')
+P.count <- readRDS('data/P.count.RDS')  %>% 
+   subset_samples(., final >= 10000)
+#P.rel <- transform_sample_counts(P.count, function(x)x/sum(x))
+#P.count <- readRDS('data/P.rel.RDS')
 
 rank <- 'species'
 P.glom <- tax_glom(P.count, taxrank=rank)
@@ -40,73 +42,151 @@ dataset$tidy_dataset()
 dataset$sample_sums() %>% range
 dataset$cal_abund()
 dataset$save_abund(dirpath = "taxa_abund")
+```
 
 
+```{r}
 #subset to include data for each domestication group
-group_W <- clone(dataset)
-group_W$sample_table <- subset(group_W$sample_table, Domestication == "Wild")
-group_W$tidy_dataset()
-group_W
-group_T <- clone(dataset)
-group_T$sample_table <- subset(group_T$sample_table, Domestication == "Traditional")
-group_T$tidy_dataset()
-group_T
-group_M <- clone(dataset)
-group_M$sample_table <- subset(group_M$sample_table, Domestication == "Modern")
-group_M$tidy_dataset()
-group_M
+unfert <- clone(dataset)
+unfert$sample_table <- subset(unfert$sample_table, Fertilization == "Unfertilized")
+unfert$tidy_dataset()
+unfert
+fert <- clone(dataset)
+fert$sample_table <- subset(fert$sample_table, Fertilization == "Fertilized")
+fert$tidy_dataset()
+fert
+MF <- clone(dataset)
+MF$sample_table <- subset(MF$sample_table, Domestication == "Modern" & Fertilization == 'Fertilized')
+MF$tidy_dataset()
+MF
+MU <- clone(dataset)
+MU$sample_table <- subset(MU$sample_table, Domestication == "Modern" & Fertilization =='Unfertilized')
+MU$tidy_dataset()
+MU
+TF <- clone(dataset)
+TF$sample_table <- subset(TF$sample_table, Domestication == "Traditional" & Fertilization == 'Fertilized')
+TF$tidy_dataset()
+TF
+TU <- clone(dataset)
+TU$sample_table <- subset(TU$sample_table, Domestication == "Traditional" & Fertilization =='Unfertilized')
+TU$tidy_dataset()
+TU
+WF <- clone(dataset)
+WF$sample_table <- subset(WF$sample_table, Domestication == "Wild" & Fertilization == 'Fertilized')
+WF$tidy_dataset()
+WF
+WU <- clone(dataset)
+WU$sample_table <- subset(WU$sample_table, Domestication == "Wild" & Fertilization =='Unfertilized')
+WU$tidy_dataset()
+WU
 ```
 
 
 
 Generate network for whole dataset
 ```{r}
-n <- trans_network$new(dataset = dataset, cor_method = "spearman", filter_thres = 0.001)
+n <- trans_network$new(dataset = unfert, cor_method = "spearman", filter_thres = 0.001)
 n$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n$cal_sum_links(taxa_level = "phylum")
 n$cal_module(method = "cluster_fast_greedy")
-n$save_network(filepath = "data/WholeNetworkProject.gefx")
+n$save_network(filepath = "data/network_tests/061424-WholeNetworkUnfert.gexf")
+```
+
+
+```{r}
+nf <- trans_network$new(dataset = fert, cor_method = "spearman", filter_thres = 0.001)
+nf$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+nf$cal_sum_links(taxa_level = "phylum")
+nf$cal_module(method = "cluster_fast_greedy")
+#nf$save_network(filepath = "data/network_tests/061424-WholeNetworkFert.gexf")
+nf$save_network(filepath = "data/network_tests/071824-WholeNetworkFert.gexf")
 ```
 
 
 
-Generate networks for each domestication group
 ```{r}
-n.W <- trans_network$new(dataset = group_W, cor_method = "spearman", filter_thres = 0.001)
-n.W$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
-n.W$cal_module(method = "cluster_fast_greedy")
-n.W$save_network(filepath = "data/networkWildSpecies.gexf")
+n.WU <- trans_network$new(dataset = WU, cor_method = "spearman", filter_thres = 0.001)
+n.WU$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
+n.WU$cal_module(method = "cluster_fast_greedy")
+#n.WU$save_network(filepath = "data/network_tests/061424-WILDU.gexf")
+n.WU$save_network(filepath = "data/network_tests/071824-WILDU.gexf")
 
 
-n.T <- trans_network$new(dataset = group_T, cor_method = "spearman", filter_thres = 0.001)
-n.T$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
-n.T$cal_module(method = "cluster_fast_greedy")
-n.T$save_network(filepath = "data/networkTraditionalSpecies.gexf")
+n.TU <- trans_network$new(dataset = TU, cor_method = "spearman", filter_thres = 0.001)
+n.TU$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n.TU$cal_module(method = "cluster_fast_greedy")
+#n.TU$save_network(filepath = "data/network_tests/061424-TRADU.gexf")
+n.TU$save_network(filepath = "data/network_tests/071824-TRADU.gexf")
 
-n.M <- trans_network$new(dataset = group_M, cor_method = "spearman", filter_thres = 0.001)
+n.MU <- trans_network$new(dataset = MU, cor_method = "spearman", filter_thres = 0.001)
+n.MU$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n.MU$cal_module(method = "cluster_fast_greedy")
+#n.MU$save_network(filepath = "data/network_tests/061424-MODERNU.gexf")
+n.MU$save_network(filepath = "data/network_tests/071824-MODERNU.gexf")
+
+n.WF <- trans_network$new(dataset = WF, cor_method = "spearman", filter_thres = 0.001)
+n.WF$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
+n.WF$cal_module(method = "cluster_fast_greedy")
+#n.WF$save_network(filepath = "data/network_tests/061424-WILDF.gexf")
+n.WF$save_network(filepath = "data/network_tests/071824-WILDF.gexf")
+
+
+n.TF <- trans_network$new(dataset = TF, cor_method = "spearman", filter_thres = 0.001)
+n.TF$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+n.TF$cal_module(method = "cluster_fast_greedy")
+#n.TF$save_network(filepath = "data/network_tests/061424-TRADF.gexf")
+n.TF$save_network(filepath = "data/network_tests/071824-TRADF.gexf")
+
+n.M <- trans_network$new(dataset = MF, cor_method = "spearman", filter_thres = 0.001)
 n.M$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 n.M$cal_module(method = "cluster_fast_greedy")
-n.M$save_network(filepath = "data/networkModernSpecies.gexf")
+#n.M$save_network(filepath = "data/network_tests/061424-MODERNF.gexf")
+n.M$save_network(filepath = "data/network_tests/071824-MODERNF.gexf")
 ```
+
+
+```{r}
+W <- clone(dataset)
+W$sample_table <- subset(W$sample_table, Domestication == "Wild" )
+W$tidy_dataset()
+W
+nW <- trans_network$new(dataset = W, cor_method = "spearman", filter_thres = 0.001)
+nW$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+nW$cal_module(method = "cluster_fast_greedy")
+#nW$save_network(filepath = "data/network_tests/061424-WILD.gexf")
+nW$save_network(filepath = "data/network_tests/071824-WILD.gexf")
+
+t <- clone(dataset)
+t$sample_table <- subset(t$sample_table, Domestication == "Traditional" )
+t$tidy_dataset()
+t
+nt <- trans_network$new(dataset = t, cor_method = "spearman", filter_thres = 0.001)
+nt$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+nt$cal_module(method = "cluster_fast_greedy")
+#nt$save_network(filepath = "data/network_tests/061424-TRAD.gexf")
+nt$save_network(filepath = "data/network_tests/071824-TRAD.gexf")
+
+m <- clone(dataset)
+m$sample_table <- subset(m$sample_table, Domestication == "Modern" )
+m$tidy_dataset()
+m
+nm <- trans_network$new(dataset = m, cor_method = "spearman", filter_thres = 0.001)
+nm$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
+nm$cal_module(method = "cluster_fast_greedy")
+#nm$save_network(filepath = "data/network_tests/061424-MOD.gexf")
+nm$save_network(filepath = "data/network_tests/071824-MOD.gexf")
+```
+
+
 
 Generate chord diagrams 
 ```{r}
-n.W$cal_sum_links(taxa_level = "phylum")
-n.W$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
-
-n.T$cal_sum_links(taxa_level = "phylum")
-n.T$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
-
-n.M$cal_sum_links(taxa_level = "phylum")
-n.M$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
-
 n$cal_sum_links(taxa_level = "phylum")
-n$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values = brewer.pal(10, "Paired"))
+n$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values  = c('#CE2020', '#660066','#bcefff','#E87A4E','#CE20C8','#7720CE','#202CCE','#20CE20','#20B7CE','#20CE89'))
+
+nf$cal_sum_links(taxa_level = "phylum")
+nf$plot_sum_links(plot_pos = TRUE, plot_num = 10, color_values  = c('#CE2020', '#660066','#E87A4E','#bcefff','#CE20C8','#7720CE','#202CCE','#00DFDA','#20CE20','#20B7CE'))
+
 ```
-
-
-
-
-
-
 
 
