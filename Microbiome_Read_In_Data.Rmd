@@ -1,0 +1,68 @@
+---
+title: "Read in Microbiome Data"
+author: "MD"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+ html_document:
+    toc: true
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+```{r}
+library(phyloseq)
+library(writexl)
+source('Functions/Microbiome_Functions.R')
+```
+
+```{r}
+d.a <- read.delim('data/demultiplex_plateA.log',sep=',',header=TRUE)
+#write_xlsx(d.a, 'data/demultiplex_plateA.xlsx')
+
+d.b <- read.delim('data/demultiplex_plateB.log',sep=',',header=TRUE)
+#write_xlsx(d.b, 'data/demultiplex_plateB.xlsx')
+
+d.c <- read.delim('data/demultiplex_plateC.log',sep=',',header=TRUE)
+#write_xlsx(d.c, 'data/demultiplex_plateC.xlsx')
+```
+
+
+```{r}
+P.A <- emu_to_phyloseq(RA_file = 'data/EMU_Relative_Abundance_plateA.csv',
+                        meta_file = 'data/demultiplex_plateA.xlsx',
+                        sheet = 'A_demultiplex',range = 'A1:L81',
+                        sample_names = 'Name',
+                        run_name = 'Mary.A')
+saveRDS(P.A,'data/P.A.RDS')
+
+P.B <- emu_to_phyloseq(RA_file = 'data/EMU_Relative_Abundance_plateB.csv',
+                        meta_file = 'data/demultiplex_plateB.xlsx',
+                        sheet = 'B_demultiplex',range = 'A1:L81',
+                        sample_names = 'Name',
+                        run_name = 'Mary.B')
+saveRDS(P.B,'data/P.B.RDS')
+
+
+P.C <- emu_to_phyloseq(RA_file = 'data/EMU_Relative_Abundance_plateC.csv',
+                        meta_file = 'data/demultiplex_plateC.xlsx',
+                        sheet = 'C_demultiplex',range = 'A1:L81',
+                        sample_names = 'Name',
+                        run_name = 'Mary.C')
+saveRDS(P.C,'data/P.C.RDS')
+
+P.rel <- merge_phyloseq(P.A,P.B,P.C)
+saveRDS(P.rel, 'data/P.rel.RDS')
+
+P.count <- P.rel
+for (n in 1:nsamples(P.count)) {
+  otu_table(P.count)[,n] <- round(otu_table(P.count)[,n] * sample_data(P.count)$final[n], 0)
+}
+saveRDS(P.count, 'data/P.count.RDS')
+
+```
+
+
+
