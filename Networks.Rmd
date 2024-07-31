@@ -15,7 +15,7 @@ output:
 install packages load libraries and load data
 ```{r}
 library(chorddiag)
-library(file2meco)
+library(file2meco)  
 library(microeco) 
 library(igraph)
 library(rgexf)
@@ -27,8 +27,7 @@ library(phyloseq)
 ```{r}
 P.count <- readRDS('data/P.count.RDS')  %>% 
    subset_samples(., final >= 10000)
-#P.rel <- transform_sample_counts(P.count, function(x)x/sum(x))
-#P.count <- readRDS('data/P.rel.RDS')
+
 
 rank <- 'species'
 P.glom <- tax_glom(P.count, taxrank=rank)
@@ -98,7 +97,6 @@ nf <- trans_network$new(dataset = fert, cor_method = "spearman", filter_thres = 
 nf$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 nf$cal_sum_links(taxa_level = "phylum")
 nf$cal_module(method = "cluster_fast_greedy")
-#nf$save_network(filepath = "data/network_tests/061424-WholeNetworkFert.gexf")
 nf$save_network(filepath = "data/network_tests/071824-WholeNetworkFert.gexf")
 ```
 
@@ -108,39 +106,33 @@ nf$save_network(filepath = "data/network_tests/071824-WholeNetworkFert.gexf")
 n.WU <- trans_network$new(dataset = WU, cor_method = "spearman", filter_thres = 0.001)
 n.WU$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
 n.WU$cal_module(method = "cluster_fast_greedy")
-#n.WU$save_network(filepath = "data/network_tests/061424-WILDU.gexf")
 n.WU$save_network(filepath = "data/network_tests/071824-WILDU.gexf")
 
 
 n.TU <- trans_network$new(dataset = TU, cor_method = "spearman", filter_thres = 0.001)
 n.TU$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 n.TU$cal_module(method = "cluster_fast_greedy")
-#n.TU$save_network(filepath = "data/network_tests/061424-TRADU.gexf")
 n.TU$save_network(filepath = "data/network_tests/071824-TRADU.gexf")
 
 n.MU <- trans_network$new(dataset = MU, cor_method = "spearman", filter_thres = 0.001)
 n.MU$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 n.MU$cal_module(method = "cluster_fast_greedy")
-#n.MU$save_network(filepath = "data/network_tests/061424-MODERNU.gexf")
 n.MU$save_network(filepath = "data/network_tests/071824-MODERNU.gexf")
 
 n.WF <- trans_network$new(dataset = WF, cor_method = "spearman", filter_thres = 0.001)
 n.WF$cal_network(COR_p_thres = 0.01, COR_optimization = TRUE)
 n.WF$cal_module(method = "cluster_fast_greedy")
-#n.WF$save_network(filepath = "data/network_tests/061424-WILDF.gexf")
 n.WF$save_network(filepath = "data/network_tests/071824-WILDF.gexf")
 
 
 n.TF <- trans_network$new(dataset = TF, cor_method = "spearman", filter_thres = 0.001)
 n.TF$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 n.TF$cal_module(method = "cluster_fast_greedy")
-#n.TF$save_network(filepath = "data/network_tests/061424-TRADF.gexf")
 n.TF$save_network(filepath = "data/network_tests/071824-TRADF.gexf")
 
 n.M <- trans_network$new(dataset = MF, cor_method = "spearman", filter_thres = 0.001)
 n.M$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 n.M$cal_module(method = "cluster_fast_greedy")
-#n.M$save_network(filepath = "data/network_tests/061424-MODERNF.gexf")
 n.M$save_network(filepath = "data/network_tests/071824-MODERNF.gexf")
 ```
 
@@ -153,7 +145,6 @@ W
 nW <- trans_network$new(dataset = W, cor_method = "spearman", filter_thres = 0.001)
 nW$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 nW$cal_module(method = "cluster_fast_greedy")
-#nW$save_network(filepath = "data/network_tests/061424-WILD.gexf")
 nW$save_network(filepath = "data/network_tests/071824-WILD.gexf")
 
 t <- clone(dataset)
@@ -163,7 +154,6 @@ t
 nt <- trans_network$new(dataset = t, cor_method = "spearman", filter_thres = 0.001)
 nt$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 nt$cal_module(method = "cluster_fast_greedy")
-#nt$save_network(filepath = "data/network_tests/061424-TRAD.gexf")
 nt$save_network(filepath = "data/network_tests/071824-TRAD.gexf")
 
 m <- clone(dataset)
@@ -173,7 +163,6 @@ m
 nm <- trans_network$new(dataset = m, cor_method = "spearman", filter_thres = 0.001)
 nm$cal_network(COR_p_thres = 0.01, COR_p_adjust = "fdr", COR_optimization = TRUE)
 nm$cal_module(method = "cluster_fast_greedy")
-#nm$save_network(filepath = "data/network_tests/061424-MOD.gexf")
 nm$save_network(filepath = "data/network_tests/071824-MOD.gexf")
 ```
 
