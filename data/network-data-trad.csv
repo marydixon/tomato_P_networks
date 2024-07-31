@@ -1,0 +1,136 @@
+ID,Label,Interval,Taxa,RelativeAbundance,Module,Phylum,WeightedDegree,ClusteringCoefficient,NumberTriangles,Modularity,Eccentricity,ClosenessCentrality,HarmonicClosenessCentrality,BetweennessCentrality,Degree
+99,Microvirga ossetica,,Microvirga ossetica,0.82420945,M4,Pseudomonadota,3,2.602458179,6,0.229007634,0.26,0,0,1,3
+98,Microvirga zambiensis,,Microvirga zambiensis,0.2487614,M4,Pseudomonadota,3,2.423064709,6,0.229007634,0.26,0,0,1,3
+97,Roseisolibacter agri,,Roseisolibacter agri,0.24791439,M2,Gemmatimonadota,4,3.25882411,8,0.278422274,0.362609127,0,8,1,6
+96,Gemmatirosa kalamazoonesis,,Gemmatirosa kalamazoonesis,0.6583251,M2,Gemmatimonadota,17,14.15518391,7,0.337078652,0.460972222,0.034765714,8,0.558823529,76
+95,Methyloceanibacter caenitepidi,,Methyloceanibacter caenitepidi,0.306228,M2,Pseudomonadota,19,15.83684772,8,0.315789474,0.465367063,0.00816574,1,0.666666667,114
+94,Planctomycetes bacterium ETA_A8,,Planctomycetes bacterium ETA_A8,0.5134206,M2,Planctomycetota,37,30.99206507,8,0.331491713,0.540367063,0.005359869,1,0.647147147,431
+93,Limisphaera ngatamarikiensis,,Limisphaera ngatamarikiensis,0.46090576,M1,Verrucomicrobiota,45,37.59209758,7,0.379746835,0.590138889,0.07180116,2,0.490909091,486
+92,Thermomonas sp. SY21,,Thermomonas sp. SY21,0.14164676,M3,Pseudomonadota,1,0.811560988,9,0.151515152,0.187635582,0,3,0,0
+91,Rubrobacter xylanophilus,,Rubrobacter xylanophilus,0.2569709,M2,Actinomycetota,9,7.600719273,7,0.31496063,0.411686508,0.002317379,8,0.777777778,28
+90,Rubrobacter radiotolerans,,Rubrobacter radiotolerans,0.5234545,M2,Actinomycetota,25,20.63511872,7,0.341880342,0.490138889,0.018558649,8,0.54,162
+9,Nitrospira japonica,,Nitrospira japonica,1.609326,M1,Nitrospirota,10,8.346914172,6,0.344827586,0.421944444,0.078211968,0,0.4,18
+89,Rubrobacter spartanus,,Rubrobacter spartanus,0.2154021,M2,Actinomycetota,9,7.404189229,7,0.315789474,0.413075397,0.002327271,8,0.694444444,25
+88,Bacillus circulans,,Bacillus circulans,0.40741357,M1,Bacillota,38,31.89017856,8,0.334261838,0.547311508,0.004330477,2,0.657183499,462
+87,Candidatus Solibacter usitatus,,Candidatus Solibacter usitatus,0.4112577,M1,Acidobacteriota,37,30.6975075,8,0.336134454,0.547311508,0.007102435,1,0.674174174,449
+86,Acidibacter ferrireducens,,Acidibacter ferrireducens,0.29358798,M2,Pseudomonadota,24,19.66046226,8,0.318302387,0.483422619,0.00125271,1,0.77173913,213
+85,Terrimonas soli,,Terrimonas soli,0.39145064,M1,Bacteroidota,3,2.448257148,7,0.294117647,0.353333333,0.00211189,0,0.666666667,2
+84,Solirubrobacter soli,,Solirubrobacter soli,0.422725,M6,Actinomycetota,3,2.537886858,9,0.227272727,0.283912037,0,7,1,3
+83,Brevitalea aridisoli,,Brevitalea aridisoli,0.2698716,M1,Acidobacteriota,27,22.29575711,7,0.355029586,0.509583333,0.021941823,2,0.752136752,264
+82,Brevitalea deliciosa,,Brevitalea deliciosa,0.8014704,M1,Acidobacteriota,33,27.37297189,7,0.362537764,0.535972222,0.031391139,2,0.664772727,351
+81,Gaiella occulta,,Gaiella occulta,2.4008276,M6,Actinomycetota,10,8.416828632,8,0.291970803,0.404970238,0.064762653,7,0.333333333,15
+80,Nitrosospira multiformis,,Nitrosospira multiformis,0.72830147,M10,Pseudomonadota,1,0.905216396,1,1,1,0,6,0,0
+8,Skermanella stibiiresistens,,Skermanella stibiiresistens,1.588281,M4,Pseudomonadota,10,8.443950534,5,0.294840295,0.353055556,0.293238804,0,0.2,9
+79,Microlunatus aurantiacus,,Microlunatus aurantiacus,0.30101565,M4,Actinomycetota,3,2.40811497,5,0.306122449,0.337222222,0.10313464,0,0.333333333,1
+78,Friedmanniella endophytica,,Friedmanniella endophytica,0.1456212,M2,Actinomycetota,5,4.115825593,7,0.276497696,0.338769841,0,8,1,10
+77,Microlunatus ginsengisoli,,Microlunatus ginsengisoli,0.45009005,M2,Actinomycetota,9,7.499237061,6,0.342857143,0.420416667,0.108196183,8,0.583333333,21
+76,Microlunatus panaciterrae,,Microlunatus panaciterrae,0.18517022,M2,Actinomycetota,1,0.807337224,8,0.24691358,0.291081349,0,8,0,0
+75,Microlunatus phosphovorus,,Microlunatus phosphovorus,0.32942316,M2,Actinomycetota,14,11.55479896,7,0.326975477,0.437361111,0.017255449,8,0.527472527,48
+74,Geitlerinema sp. PCC 7407,,Geitlerinema sp. PCC 7407,0.39588118,M9,Cyanobacteriota,1,0.894132674,1,1,1,0,5,0,0
+73,Planctomycetales bacterium,,Planctomycetales bacterium,0.6263341,M2,Planctomycetota,34,28.43858904,8,0.328767123,0.527867063,0.025324492,1,0.534759358,300
+72,Thermostilla marina,,Thermostilla marina,0.27527946,M2,Planctomycetota,21,17.41550398,8,0.313315927,0.467450397,0.001361949,1,0.79047619,166
+71,Planctomycetes bacterium Pla85_3_4,,Planctomycetes bacterium Pla85_3_4,0.2670048,M2,Planctomycetota,35,29.22328019,8,0.330578512,0.533422619,0.004948775,1,0.648739496,386
+70,Gloeocapsa sp. PCC 7428,,Gloeocapsa sp. PCC 7428,0.24824017,M5,Cyanobacteriota,5,4.313670039,2,0.857142857,0.916666667,0,9,1,10
+7,Skermanella aerolata,,Skermanella aerolata,0.29091662,M4,Pseudomonadota,2,1.803643107,6,0.228571429,0.255833333,0,0,1,1
+69,Crinalium epipsammum,,Crinalium epipsammum,0.9461143,M5,Cyanobacteriota,6,5.353149116,1,1,1,2.24E-05,9,0.933333333,14
+68,Anabaena cylindrica,,Anabaena cylindrica,0.37392396,M5,Cyanobacteriota,6,5.177709579,1,1,1,2.24E-05,9,0.933333333,14
+67,Tepidiforma bonchosmolovskayae,,Tepidiforma bonchosmolovskayae,0.18380196,M2,Chloroflexota,6,4.850348294,9,0.266075388,0.373634259,5.88E-05,1,0.733333333,11
+66,Ilumatobacter fluminis,,Ilumatobacter fluminis,0.7080383,M6,Actinomycetota,3,2.575293243,9,0.227272727,0.283912037,0,7,1,3
+65,Aciditerrimonas ferrireducens,,Aciditerrimonas ferrireducens,1.0369402,M2,Actinomycetota,39,32.92563379,8,0.337078652,0.554255952,0.029518835,1,0.557354926,413
+64,Arthrobacter crystallopoietes,,Arthrobacter crystallopoietes,0.106332794,M3,Actinomycetota,2,1.625229895,9,0.152866242,0.199441138,1.12E-04,3,0,0
+63,Candidatus Saccharibacteria bacterium oral taxon 955,,Candidatus Saccharibacteria bacterium oral taxon 955,0.40330884,M3,Candidatus Saccharibacteria,2,1.633469284,9,0.151133501,0.189024471,7.86E-05,3,0,0
+62,Bacillus megaterium,,Bacillus megaterium,0.37724686,M1,Bacillota,34,28.64670998,8,0.328767123,0.527867063,0.004614904,2,0.709447415,398
+61,Peribacillus simplex,,Peribacillus simplex,0.23260298,M1,Bacillota,17,13.97071379,7,0.331491713,0.452638889,0.003577671,2,0.845588235,115
+60,[Brevibacterium] frigoritolerans,,[Brevibacterium] frigoritolerans,0.46455443,M1,Bacillota,38,31.4836545,8,0.334261838,0.547311508,0.005838173,2,0.664295875,467
+6,Variovorax paradoxus,,Variovorax paradoxus,0.34493002,M3,Pseudomonadota,3,2.528714716,9,0.151898734,0.195274471,2.81E-04,3,0.333333333,1
+59,Peribacillus muralis,,Peribacillus muralis,0.124315545,M1,Bacillota,8,6.476049364,8,0.291262136,0.398025794,0,2,1,28
+58,[Polyangium] brachysporum,,[Polyangium] brachysporum,0.3603066,M8,Pseudomonadota,1,0.82131809,2,0.666666667,0.75,0,4,0,0
+57,Nordella oligomobilis,,Nordella oligomobilis,0.3118965,M2,Pseudomonadota,20,16.55708295,8,0.31496063,0.467450397,0.020916142,1,0.557894737,106
+56,Agrobacterium tumefaciens,,Agrobacterium tumefaciens,0.3934053,M3,Pseudomonadota,2,1.695851922,9,0.1517067,0.191107804,0,3,1,1
+55,Chthoniobacter flavus,,Chthoniobacter flavus,0.44298816,M4,Verrucomicrobiota,3,2.489734471,5,0.3,0.33375,0.027584637,0,0.666666667,2
+54,Litorilinea aerophila,,Litorilinea aerophila,0.34466943,M1,Chloroflexota,36,30.19372445,8,0.333333333,0.540367063,0.00302385,2,0.723809524,456
+53,Paenibacillus prosopidis,,Paenibacillus prosopidis,0.29691088,M1,Bacillota,34,28.5542888,7,0.364741641,0.541527778,0.02894237,2,0.668449198,375
+52,Paenibacillus castaneae,,Paenibacillus castaneae,0.2872028,M1,Bacillota,18,14.81598091,8,0.3125,0.45703373,8.12E-04,2,0.823529412,126
+51,Paenibacillus sp. JDR-2,,Paenibacillus sp. JDR-2,0.33756754,M1,Bacillota,38,32.09149253,8,0.333333333,0.545922619,0.004908649,2,0.675675676,475
+50,Microvirga subterranea,,Microvirga subterranea,0.37131777,M4,Pseudomonadota,5,4.139117718,5,0.259179266,0.294583333,0.005945881,0,0.6,6
+5,Luteitalea pratensis,,Luteitalea pratensis,2.2589204,M2,Acidobacteriota,29,24.14366251,8,0.320855615,0.501478175,0.002632058,1,0.694581281,282
+49,Nitrosospira briensis,,Nitrosospira briensis,0.5771421,M10,Pseudomonadota,1,0.905216396,1,1,1,0,6,0,0
+48,Leptolyngbya sp. O-77,,Leptolyngbya sp. O-77,0.4406426,M9,Cyanobacteriota,1,0.894132674,1,1,1,0,5,0,0
+47,Fimbriimonas ginsengisoli,,Fimbriimonas ginsengisoli,0.20321813,M2,Armatimonadota,1,0.790545821,9,0.24,0.300300926,0,1,0,0
+46,Niastella vici,,Niastella vici,0.16836026,M1,Bacteroidota,1,0.808230698,8,0.275862069,0.346200397,0,2,0,0
+45,Sphingomonas sp. AE3,,Sphingomonas sp. AE3,0.3803743,M3,Pseudomonadota,3,2.428409278,8,0.175182482,0.222152778,0,3,1,3
+44,Sphingomonas lutea,,Sphingomonas lutea,0.1788502,M3,Pseudomonadota,1,0.828251481,9,0.151515152,0.187635582,0,3,0,0
+43,Sphingomonas sediminicola,,Sphingomonas sediminicola,0.41855508,M3,Pseudomonadota,9,7.35714072,8,0.178306092,0.255486111,0.046414544,3,0.166666667,6
+42,Sphingomonas daechungensis,,Sphingomonas daechungensis,0.42090064,M3,Pseudomonadota,5,4.091443419,7,0.207253886,0.26531746,0.020951633,3,0.7,7
+41,Skermanella mucosa,,Skermanella mucosa,0.18536569,M4,Pseudomonadota,2,1.663400292,6,0.228571429,0.255833333,0,0,1,1
+40,Skermanella rosea,,Skermanella rosea,0.66764224,M4,Pseudomonadota,6,5.156145632,6,0.230326296,0.2725,4.30E-04,0,0.466666667,7
+4,Stenotrophobacter terrae,,Stenotrophobacter terrae,0.76472306,M1,Acidobacteriota,6,5.107679188,6,0.337078652,0.399722222,0.030312167,0,0.6,9
+39,Metabacillus litoralis,,Metabacillus litoralis,0.25442988,M1,Bacillota,14,11.51072466,8,0.294840295,0.419811508,4.25E-05,2,0.923076923,84
+38,Rubrivivax gelatinosus,,Rubrivivax gelatinosus,0.31684828,M8,Pseudomonadota,2,1.638656199,1,1,1,1.12E-04,4,0,0
+37,Bacillus oryzisoli,,Bacillus oryzisoli,0.3777681,M1,Bacillota,30,25.37657529,8,0.322580645,0.50703373,0.00162718,2,0.742528736,323
+36,Ohtaekwangia kribbensis,,Ohtaekwangia kribbensis,0.2509115,M1,Bacteroidota,3,2.565159678,7,0.294117647,0.353333333,0,0,1,3
+35,Flavitalea flava,,Flavitalea flava,0.12594442,M7,Bacteroidota,1,0.82290709,8,0.167364017,0.18281746,0,0,0,0
+34,Paraflavitalea soli,,Paraflavitalea soli,0.21950686,M1,Bacteroidota,2,1.613531709,8,0.268456376,0.334394841,0,0,1,1
+33,Flavisolibacter tropicus,,Flavisolibacter tropicus,0.22849824,M7,Bacteroidota,3,2.489769697,6,0.248447205,0.28125,0.052407137,0,0,0
+32,Flavisolibacter ginsengiterrae,,Flavisolibacter ginsengiterrae,0.14040881,M7,Bacteroidota,1,0.791399181,7,0.199335548,0.216646825,0,0,0,0
+31,Flavisolibacter ginsenosidimutans,,Flavisolibacter ginsenosidimutans,0.3326809,M7,Bacteroidota,3,2.563799679,7,0.200668896,0.227757937,0.026596342,0,0,0
+30,Arthrobacter pascens,,Arthrobacter pascens,0.1443181,M3,Actinomycetota,6,5.041857421,8,0.17699115,0.240208333,0.013062507,3,0.6,9
+3,Stenotrophobacter namibiensis,,Stenotrophobacter namibiensis,0.266679,M1,Acidobacteriota,7,5.916983843,5,0.322580645,0.373472222,0.209537234,0,0.333333333,7
+29,Arthrobacter sp. 24S4-2,,Arthrobacter sp. 24S4-2,0.15702331,M3,Actinomycetota,6,5.036842108,8,0.176470588,0.237430556,3.18E-04,3,0.666666667,10
+28,Arthrobacter sp. FB24,,Arthrobacter sp. FB24,0.15181091,M3,Actinomycetota,3,2.450356126,8,0.175438596,0.223541667,0,3,1,3
+27,Arthrobacter sp. KBS0702,,Arthrobacter sp. KBS0702,0.40630594,M3,Actinomycetota,5,4.171502233,7,0.206185567,0.261150794,0.009445255,3,0.8,8
+26,Arthrobacter sp. QXT-31,,Arthrobacter sp. QXT-31,0.6609313,M3,Actinomycetota,13,10.97288305,7,0.211267606,0.30281746,0.091807878,3,0.333333333,26
+25,Arthrobacter sp. UKPF54-2,,Arthrobacter sp. UKPF54-2,0.30068985,M3,Actinomycetota,8,6.80093056,8,0.177514793,0.248541667,0.007099839,3,0.5,14
+24,Arthrobacter sp. YN,,Arthrobacter sp. YN,0.2744976,M3,Actinomycetota,7,5.792541504,8,0.178041543,0.248541667,0.026667415,3,0.428571429,9
+23,Pseudarthrobacter sp. NIBRBAC000502771,,Pseudarthrobacter sp. NIBRBAC000502771,0.2617924,M3,Actinomycetota,11,9.223204672,7,0.210526316,0.294484127,0.066838739,3,0.418181818,23
+22,Pseudarthrobacter sp. NIBRBAC000502772,,Pseudarthrobacter sp. NIBRBAC000502772,0.43881825,M3,Actinomycetota,1,0.840581477,7,0.199004975,0.225734127,0,3,0,0
+21,Arthrobacter sp. PGP41,,Arthrobacter sp. PGP41,0.39275372,M3,Actinomycetota,4,3.337206364,8,0.176470588,0.231875,4.68E-04,3,0.5,3
+20,Arthrobacter sp. Rue61a,,Arthrobacter sp. Rue61a,0.12829,M3,Actinomycetota,2,1.6539132,8,0.174927114,0.217986111,0,3,1,1
+2,Stenotrophobacter roseus,,Stenotrophobacter roseus,0.41366845,M1,Acidobacteriota,4,3.478438735,6,0.293398533,0.335833333,6.57E-05,0,0.833333333,5
+19,Pseudarthrobacter sulfonivorans,,Pseudarthrobacter sulfonivorans,0.71963584,M3,Actinomycetota,6,4.912806928,6,0.247933884,0.305972222,0.235588972,3,0.333333333,5
+18,Ohtaekwangia koreensis,,Ohtaekwangia koreensis,0.29808366,M1,Bacteroidota,5,4.222229362,7,0.307692308,0.381805556,2.63E-04,0,0.8,8
+17,Chryseolinea soli,,Chryseolinea soli,1.7261487,M1,Bacteroidota,35,29.38246679,7,0.364741641,0.544305556,0.045113348,2,0.536134454,319
+16,Chryseolinea serpens,,Chryseolinea serpens,0.54541165,M1,Bacteroidota,14,11.58259314,6,0.352941176,0.444166667,0.125261429,0,0.384615385,35
+15,Planctomycetes bacterium Pla175,,Planctomycetes bacterium Pla175,0.3218652,M1,Planctomycetota,41,34.46228278,8,0.338028169,0.561200397,0.009194592,2,0.614634146,504
+14,Pirellula staleyi,,Pirellula staleyi,0.37711656,M2,Planctomycetota,37,31.02712643,8,0.334261838,0.54453373,0.004860615,1,0.672672673,448
+135,Conexibacter woesei,,Conexibacter woesei,0.15181091,M6,Actinomycetota,3,2.466949463,9,0.227272727,0.283912037,0,7,1,3
+134,Chroococcidiopsis thermalis,,Chroococcidiopsis thermalis,0.17806834,M5,Cyanobacteriota,6,5.185772717,1,1,1,2.24E-05,9,0.933333333,14
+133,Loriellopsis cavernicola,,Loriellopsis cavernicola,0.14216799,M5,Cyanobacteriota,6,5.279978216,1,1,1,2.24E-05,9,0.933333333,14
+132,Cylindrospermum stagnale,,Cylindrospermum stagnale,0.113499835,M5,Cyanobacteriota,6,5.002490461,1,1,1,2.24E-05,9,0.933333333,14
+131,Aliterella antarctica,,Aliterella antarctica,0.21846437,M5,Cyanobacteriota,5,4.110475421,2,0.857142857,0.916666667,0,9,1,10
+130,Labilithrix luteola,,Labilithrix luteola,0.14966081,M2,Myxococcota,2,1.600435555,9,0.25210084,0.334050926,0,1,1,1
+13,Woeseia oceani,,Woeseia oceani,0.38871413,M1,Pseudomonadota,47,40.09581107,8,0.345821326,0.588978175,0.018348434,2,0.543940796,588
+129,Planctomycetes bacterium Mal4,,Planctomycetes bacterium Mal4,0.21201405,M2,Planctomycetota,8,6.665230691,8,0.283018868,0.384831349,0.001177433,1,0.785714286,22
+128,Planctomycetes bacterium Pan216,,Planctomycetes bacterium Pan216,0.11226189,M1,Planctomycetota,14,11.41537482,8,0.305343511,0.433422619,7.64E-05,2,0.923076923,84
+127,Planctomycetes bacterium Pan265,,Planctomycetes bacterium Pan265,0.10346598,M2,Planctomycetota,7,5.703463852,8,0.28436019,0.380922619,0.001200779,1,0.761904762,16
+126,Haliangium tepidum,,Haliangium tepidum,0.33685082,M2,Myxococcota,29,24.09849262,8,0.321715818,0.503561508,0.011215685,1,0.63546798,258
+125,Brevibacillus thermoruber,,Brevibacillus thermoruber,0.17155285,M2,Bacillota,19,15.54565638,8,0.313315927,0.461200397,0.004737716,1,0.725146199,124
+124,Bacillus sp. 1NLA3E,,Bacillus sp. 1NLA3E,0.17298625,M1,Bacillota,15,12.3436234,8,0.306905371,0.440644841,1.36E-05,2,0.980952381,103
+123,Caldilinea aerophila,,Caldilinea aerophila,0.24465665,M1,Chloroflexota,25,20.38697451,8,0.321715818,0.491755952,0.008635703,2,0.796666667,239
+122,Planctomycetes bacterium ETA_A1,,Planctomycetes bacterium ETA_A1,0.15441711,M2,Planctomycetota,2,1.621957481,9,0.248447205,0.325023148,0,1,1,1
+121,Georgfuchsia toluolica,,Georgfuchsia toluolica,0.20973362,M1,Pseudomonadota,4,3.257204175,8,0.283018868,0.369811508,0,2,1,6
+120,Polyangium fumosum,,Polyangium fumosum,0.14601213,M2,Myxococcota,3,2.471608102,9,0.247933884,0.326689815,0,1,1,3
+12,Steroidobacter denitrificans,,Steroidobacter denitrificans,1.2284305,M1,Pseudomonadota,48,41.03394067,8,0.350877193,0.598700397,0.04557137,1,0.510638298,576
+119,Stigmatella aurantiaca,,Stigmatella aurantiaca,0.19976492,M2,Myxococcota,11,8.889383495,8,0.295566502,0.413561508,5.79E-04,1,0.727272727,40
+118,Sandaracinus amylolyticus,,Sandaracinus amylolyticus,0.2213312,M2,Myxococcota,31,25.88838381,8,0.325203252,0.513978175,0.008602514,1,0.690322581,321
+117,Chondromyces crocatus,,Chondromyces crocatus,0.10216288,M2,Myxococcota,6,4.782354057,8,0.291970803,0.390367063,7.28E-05,1,0.8,12
+116,Acidimicrobium ferrooxidans,,Acidimicrobium ferrooxidans,0.103140205,M2,Actinomycetota,4,3.259160042,9,0.264900662,0.365300926,8.02E-06,1,0.833333333,5
+115,Nocardioides cavernae,,Nocardioides cavernae,0.1389754,M3,Actinomycetota,1,0.80866909,9,0.151515152,0.187635582,0,3,0,0
+114,Bacillus sp. Y1,,Bacillus sp. Y1,0.11297859,M1,Bacillota,5,4.030625165,8,0.28708134,0.380228175,2.19E-05,2,0.9,9
+113,Adhaeribacter terreus,,Adhaeribacter terreus,0.26244393,M1,Bacteroidota,8,6.491577566,7,0.313315927,0.399861111,6.59E-04,2,0.785714286,22
+112,Arenimicrobium luteum,,Arenimicrobium luteum,0.1090693,M1,Acidobacteriota,23,18.794496,8,0.317460317,0.479255952,2.40E-04,2,0.913043478,231
+111,Ramlibacter tataouinensis,,Ramlibacter tataouinensis,0.4557585,M8,Pseudomonadota,1,0.817338109,2,0.666666667,0.75,0,4,0,0
+110,Burkholderiales bacterium GJ-E10,,Burkholderiales bacterium GJ-E10,0.22641328,M1,Pseudomonadota,31,25.64397824,8,0.328767123,0.51953373,0.001512478,2,0.795698925,370
+11,Povalibacter uvarum,,Povalibacter uvarum,0.9375138,M2,Pseudomonadota,49,41.86498493,7,0.380952381,0.606805556,0.063413628,1,0.495748299,583
+109,Bacillus sp. S3,,Bacillus sp. S3,0.3737285,M1,Bacillota,38,31.89938033,8,0.334261838,0.547311508,0.006152008,2,0.664295875,467
+108,Neobacillus niacini,,Neobacillus niacini,0.21957201,M1,Bacillota,33,27.24100077,8,0.330578512,0.527867063,0.002020025,2,0.770833333,407
+107,Thioalkalivibrio sulfidiphilus,,Thioalkalivibrio sulfidiphilus,0.108352594,M2,Pseudomonadota,7,5.697529852,8,0.290556901,0.393859127,2.25E-04,1,0.80952381,17
+106,Baekduia soli,,Baekduia soli,0.45940718,M6,Actinomycetota,3,2.578574836,9,0.227272727,0.283912037,0,7,1,3
+105,Solirubrobacter ginsenosidimutans,,Solirubrobacter ginsenosidimutans,0.21911593,M6,Actinomycetota,5,4.184654891,9,0.228136882,0.29224537,2.24E-04,7,0.6,6
+104,Steroidobacter agariperforans,,Steroidobacter agariperforans,0.35796103,M1,Pseudomonadota,29,24.099042,7,0.356083086,0.516527778,0.009244147,2,0.770935961,313
+103,Microlunatus sp. KUDC0627,,Microlunatus sp. KUDC0627,0.19194633,M2,Actinomycetota,7,5.729107261,7,0.316622691,0.401944444,0.001198965,8,0.714285714,15
+102,Gemmatimonas phototrophica,,Gemmatimonas phototrophica,0.22914977,M2,Gemmatimonadota,22,17.970595,8,0.307692308,0.467470238,0.005370345,1,0.597402597,138
+101,Cohnella abietis,,Cohnella abietis,0.1441878,M1,Bacillota,29,23.78844911,8,0.325203252,0.508422619,0.001450184,2,0.768472906,312
+100,Pedobacter mongoliensis,,Pedobacter mongoliensis,0.12138358,M7,Bacteroidota,1,0.847108483,8,0.167364017,0.18281746,0,0,0,0
+10,Nitrospira moscoviensis,,Nitrospira moscoviensis,0.19194633,M1,Nitrospirota,2,1.628484905,7,0.289156627,0.340138889,4.50E-04,0,0,0
+1,Vicinamibacter silvestris,,Vicinamibacter silvestris,7.7192917,M1,Actinomycetota,39,32.58000094,7,0.36809816,0.559583333,0.055205557,2,0.58974359,437
