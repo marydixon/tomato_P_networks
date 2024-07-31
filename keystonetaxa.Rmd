@@ -9,30 +9,80 @@ editor_options:
 
 ```{r}
 library(agricolae)
-library(Polychrome)
+library(patchwork)
 library(tidyverse)
 library(readxl)
 library(phyloseq)
 ```
 
+# Read in data
+
 
 ```{r}
-w <- read.csv('data/networkWild.csv')
-key.w <- w %>% 
-  filter(., degree > 6 & weighted.degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+u.wild <- read.csv('data/network-data-unfert-wild.csv')
+k.uwild <- u.wild %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)%>% 
+  dplyr::select(Label) %>% 
+  mutate(., Dom="Wild")
 
-t <- read.csv('data/networktrad.csv')
-key.t <- t %>% 
-  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+u.trad <- read.csv('data/network-data-unfert-trad.csv')
+k.utrad <- u.trad %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)%>% 
+  dplyr::select(Label) 
 
-m <- read.csv('data/networkmod.csv')
-key.m <- m %>% 
-  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+u.mod <- read.csv('data/network-data-unfert-mod.csv')
+k.umod <- u.mod %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
+```
 
-n <- read.csv('data/networkWhole.csv')
-key <- n %>% 
-  filter(., Degree > 6 & Weighted.Degree > 6 & Closeness.Centrality > 0.14 & Betweenness.Centrality < 0.05)
+```{r}
+f.wild <- read.csv('data/network-data-fert-wild.csv')
+k.fwild <- f.wild %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)%>% 
+  dplyr::select(Label) %>% 
+  mutate(., Dom="Wild")
 
+f.trad <- read.csv('data/network-data-fert-trad.csv')
+k.ftrad <- f.trad %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
+  dplyr::select(Label) 
+
+f.mod <- read.csv('data/network-data-fert-mod.csv')
+k.fmod <- f.mod %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
+```
+
+```{r}
+wild <- read.csv('data/network-data-wild.csv')
+k.wild <- wild %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)%>% 
+  dplyr::select(Label) %>% 
+  mutate(., Dom="Wild")
+
+trad <- read.csv('data/network-data-trad.csv')
+k.trad <- trad %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
+
+mod <- read.csv('data/network-data-mod.csv')
+k.mod <- mod %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
+```
+
+
+```{r}
+unfert <- read.csv('data/network-data-unfert-all.csv')
+k.unfert<- unfert %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09) %>% 
+  dplyr::select(Label) %>% 
+  mutate(., Fert="Fert")
+
+fert <- read.csv('data/network-data-fert-all.csv')
+k.fert <- fert %>% 
+  filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09) %>% 
+  dplyr::select(Label) %>% 
+  mutate(., Fert="Unfert")
+
+k.all <- rbind(k.unfert,k.fert)
 ```
 
 ```{r}
@@ -41,22 +91,26 @@ kegg <- kegg %>%
   mutate_if(is.numeric, replace_na, replace=0)
 
 P.rel <- readRDS('data/P.rel.RDS')
-P.key <- subset_taxa(P.rel, species == 'Peribacillus muralis' | 
-                       species == 'Arthrobacter sp. ZXY-2' | 
-                       species == 'Longimicrobium terrae')
+P.keyu <- subset_taxa(P.rel, species == 'Fimbriiglobus ruber' |
+                       species == 'Daejeonella oryzae' |
+                       species == 'Planctomycetes bacterium Pan265' |
+                       species == 'Acidothermus cellulolyticus' |
+                       species == 'Polyangium fumosum')
+
+P.keyf <- subset_taxa(P.rel, species == 'Sandaracinus amylolyticus' |
+                       species == 'Peribacillus muralis')
 
 ```
 
 ```{r}
 
-P.glom <- tax_glom(P.key, taxrank="superkingdom")
-P.glom <- prune_taxa(taxa_sums(P.glom) > 0, P.glom)
 
-d <- psmelt(P.key)
+d <- psmelt(P.keyu) %>% 
+  filter(., Fertilization == 'Unfertilized')
 
 par(mfrow=c(2,2))
 mod <- d %>% 
-  lm(sqrt(Abundance) ~ Fertilization*Domestication/Variety, data = .)
+  lm(sqrt(Abundance) ~ Domestication, data = .)
 plot(mod)
 aov.mod <- aov(mod)
 summary(aov.mod)
@@ -65,18 +119,16 @@ t<- HSD.test(mod, "Domestication");t
 
 
 
-sum.do <- summarize(group_by(d, Domestication, Fertilization),
+sum.do <- summarize(group_by(d, Domestication),
                    n=n(),
                    mean=mean(sqrt(Abundance)),
                    sd=sd(sqrt(Abundance)),
                    se=sd/sqrt(n))
 
 
-ggplot(sum.do, aes(x=Domestication,y=mean,fill=Fertilization))+
-  geom_col(position='dodge')+
-  scale_fill_brewer(palette = 'Paired')+
+pu <- ggplot(sum.do, aes(x=Domestication,y=mean))+
+  geom_col(position='dodge',fill='#A6CEE3')+
   geom_errorbar(aes(ymin = mean-se, ymax = mean+se),position=position_dodge(0.9), width = .25)+
- # ylab(expression(atop("Keystone Taxa Relative Abundance", paste("(Square-Root-Transformed)"))))+
   labs(y="Keystone Taxa Relative Abundance (Square-Root-Transformed)")+
   theme(axis.text.x=element_text(size=14, colour = "black", family='Palatino Linotype' ), 
         axis.text.y=element_text(size=14, colour = "black",family='Palatino Linotype' ),
@@ -92,8 +144,59 @@ ggplot(sum.do, aes(x=Domestication,y=mean,fill=Fertilization))+
         legend.position = 'none',
         strip.text = element_blank(),
         strip.background = element_blank(),
-       axis.title.x = element_blank())
+       axis.title.x = element_blank());pu
 ```
+
+
+```{r}
+
+d <- psmelt(P.keyf) %>% 
+  filter(., Fertilization == 'Fertilized')
+
+par(mfrow=c(2,2))
+mod <- d %>% 
+  lm(sqrt(Abundance) ~ Domestication, data = .)
+plot(mod)
+aov.mod <- aov(mod)
+summary(aov.mod)
+ 
+t<- HSD.test(mod, "Domestication");t
+
+
+
+sum.do <- summarize(group_by(d, Domestication),
+                   n=n(),
+                   mean=mean(sqrt(Abundance)),
+                   sd=sd(sqrt(Abundance)),
+                   se=sd/sqrt(n))
+
+
+pf <- ggplot(sum.do, aes(x=Domestication,y=mean))+
+  geom_col(position='dodge',fill='#1F78B4')+
+  geom_errorbar(aes(ymin = mean-se, ymax = mean+se),position=position_dodge(0.9), width = .25)+
+  labs(y="Keystone Taxa Relative Abundance (Square-Root-Transformed)")+
+  theme(axis.text.x=element_text(size=14, colour = "black", family='Palatino Linotype' ), 
+        axis.text.y=element_text(size=14, colour = "black",family='Palatino Linotype' ),
+        axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank(),
+        legend.text = element_text(size = 24),
+        strip.text.y = element_text(size=8, face="bold"), 
+        legend.title = element_blank(),
+        legend.position = 'none',
+        strip.text = element_blank(),
+        strip.background = element_blank(),
+       axis.title.x = element_blank()); pf
+```
+
+
+```{r}
+p <- pu/pf;p
+```
+
 
 ```{r}
 P40 <- createPalette(15, c("#FF0000", "#00FF00", "#0000FF"), range = c(30, 80))
