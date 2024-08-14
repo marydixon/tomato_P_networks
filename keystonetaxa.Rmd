@@ -45,7 +45,7 @@ k.fwild <- f.wild %>%
 f.trad <- read.csv('data/network-data-fert-trad.csv')
 k.ftrad <- f.trad %>% 
   filter(., Degree > 6 & WeightedDegree > 6 & ClosenessCentrality > 0.14 & BetweennessCentrality < 0.05 & ClusteringCoefficient > 0.09)
-  dplyr::select(Label) 
+
 
 f.mod <- read.csv('data/network-data-fert-mod.csv')
 k.fmod <- f.mod %>% 
@@ -82,159 +82,236 @@ k.fert <- fert %>%
   dplyr::select(Label) %>% 
   mutate(., Fert="Unfert")
 
-k.all <- rbind(k.unfert,k.fert)
 ```
 
+
+
 ```{r}
-kegg <- read_excel('data/EMU_database.GIBBs.KO.PICRUST2.xlsx', sheet='EMU_database.GIBBs.PICRUSt2', range='B9:BE17565')
-kegg <- kegg %>%
+dflist <- k.unfert$Label
+kegg <- read_excel('data/EMU_database.GIBBs.KO.PICRUST2.xlsx', sheet='EMU_database.GIBBs.PICRUSt2', range='B9:BE17565') %>%
   mutate_if(is.numeric, replace_na, replace=0)
 
+keggsub <- filter(kegg, Species %in% dflist) 
+
 P.rel <- readRDS('data/P.rel.RDS')
-P.keyu <- subset_taxa(P.rel, species == 'Fimbriiglobus ruber' |
-                       species == 'Daejeonella oryzae' |
-                       species == 'Planctomycetes bacterium Pan265' |
-                       species == 'Acidothermus cellulolyticus' |
-                       species == 'Polyangium fumosum')
+P.sub<- subset_taxa(P.rel, species %in% dflist)
+df.sub <- psmelt(P.sub) %>% 
+  filter(.,Fertilization=='Unfertilized')
+names(df.sub)[names(df.sub) == 'species'] <- 'Species'
+df.kegg <- left_join(df.sub,keggsub, by = 'Species')
+unique(df.kegg$Species) #110
+d<- pivot_longer(df.kegg, cols=hcnA:nosZ, names_to = 'Gene', values_to = 'value') %>%   filter(!value==0)
 
-P.keyf <- subset_taxa(P.rel, species == 'Sandaracinus amylolyticus' |
-                       species == 'Peribacillus muralis')
+
+d$Function <- ifelse(d$Gene=="hcnA", "Biocontrol",
+                        ifelse(d$Gene=="budA","Biocontrol",
+                               ifelse(d$Gene=="budC","Biocontrol",
+                                      ifelse(d$Gene=="E3.2.1.6","Biocontrol",                                             ifelse(d$Gene=="E3.2.1.14","Biocontrol",                                                    ifelse(d$Gene=="phlD","Biocontrol",                                                       ifelse(d$Gene=="ituA","Biocontrol",  
+                      ifelse(d$Gene=="fenA", "Biocontrol",
+                        ifelse(d$Gene=="srfAA","Biocontrol",
+                               ifelse(d$Gene=="rifM","Biocontrol",
+                                      ifelse(d$Gene=="phzE","Biocontrol",
+                                             ifelse(d$Gene=="ipdC","Stress",                                                    ifelse(d$Gene=="acdS","Stress",                                                           ifelse(d$Gene=="mbtI","Siderophore",                                                    ifelse(d$Gene=="entA", "Siderophore",
+        ifelse(d$Gene=="pchB","Siderophore",
+           ifelse(d$Gene=="bglX","C decomposition",
+              ifelse(d$Gene=="bglB","C decomposition",
+                 ifelse(d$Gene=="E3.2.1.21","C decomposition",                                          ifelse(d$Gene=="amiE","N decomposition",    
+ifelse(d$Gene=="ureC","N decomposition",                                                    ifelse(d$Gene=="pqqC", "PO4 solubility",
+        ifelse(d$Gene=="phoA","P decomposition",
+           ifelse(d$Gene=="phoD","P decomposition",
+              ifelse(d$Gene=="PHO","P decomposition",
+                 ifelse(d$Gene=="appA","P decomposition",                                          ifelse(d$Gene=="phoN","P decomposition",                             ifelse(d$Gene=="aslA","S decomposition",                                                    ifelse(d$Gene=="nifH", "N-fixation",
+        ifelse(d$Gene=="nifD","N-fixation",
+           ifelse(d$Gene=="nifK","N-fixation",
+              ifelse(d$Gene=="pmoA-amoA","Nitrification",
+                 ifelse(d$Gene=="hao","Nitrification",                                          ifelse(d$Gene=="nirB","Dissimilatory nitrate reduction",    
+ifelse(d$Gene=="nirD","Dissimilatory nitrate reduction",                                   ifelse(d$Gene=="nrfA", "Dissimilatory nitrate reduction",
+        ifelse(d$Gene=="nirA","Assimilatory nitrate reduction",
+           ifelse(d$Gene=="NIT-6","Assimilatory nitrate reduction",
+              ifelse(d$Gene=="narG","Denitrification",
+                 ifelse(d$Gene=="narH","Denitrification",                                          ifelse(d$Gene=="nirK","Denitrification",    
+ ifelse(d$Gene=="nirS","Denitrification",                                   ifelse(d$Gene=="norB", "Denitrification",
+        ifelse(d$Gene=="norC","Denitrification",
+          ifelse(d$Gene=='nosZ','Denitrification',NA)))))))))))))))))))))))))))))))))))))))))))))
+
+
+d.unfert <- summarize(group_by(d, Species,Function,Gene),
+                        mean=mean(Abundance)) 
+
 
 ```
 
 ```{r}
-
-
-d <- psmelt(P.keyu) %>% 
-  filter(., Fertilization == 'Unfertilized')
-
+mod <- lm(log(mean) ~ Function/Gene, data = d.unfert)
 par(mfrow=c(2,2))
-mod <- d %>% 
-  lm(sqrt(Abundance) ~ Domestication, data = .)
 plot(mod)
 aov.mod <- aov(mod)
 summary(aov.mod)
- 
-t<- HSD.test(mod, "Domestication");t
+t<- HSD.test(mod, "Function");t
 
-
-
-sum.do <- summarize(group_by(d, Domestication),
-                   n=n(),
-                   mean=mean(sqrt(Abundance)),
-                   sd=sd(sqrt(Abundance)),
-                   se=sd/sqrt(n))
-
-
-pu <- ggplot(sum.do, aes(x=Domestication,y=mean))+
-  geom_col(position='dodge',fill='#A6CEE3')+
-  geom_errorbar(aes(ymin = mean-se, ymax = mean+se),position=position_dodge(0.9), width = .25)+
-  labs(y="Keystone Taxa Relative Abundance (Square-Root-Transformed)")+
-  theme(axis.text.x=element_text(size=14, colour = "black", family='Palatino Linotype' ), 
-        axis.text.y=element_text(size=14, colour = "black",family='Palatino Linotype' ),
-        axis.line = element_line(colour = "black"),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        legend.key = element_blank(),
-        legend.text = element_text(size = 24),
-        strip.text.y = element_text(size=8, face="bold"), 
-        legend.title = element_blank(),
-        legend.position = 'none',
-        strip.text = element_blank(),
-        strip.background = element_blank(),
-       axis.title.x = element_blank());pu
 ```
 
 
 ```{r}
+p1<-ggplot(d.function,aes(x=log(mean),y=Function))+
+  geom_point(position = 'jitter',size=2,aes(color=Gene))+
+  scale_color_manual(values = c("#EA4691", "#6BFF33", "#2929F0", "#BFE75D", "#F9FF76", "#A3A92D", "#7667A0", "#3F2B78", "#26194C", "#6A6F07", "#800080", "#610185", "#A2CACB","#A0008D", "#661AFF", "#662341", "#8942DE", "#402B47", "#8C6262", "#E20C0C", "#1BB74B", "#39FDA4", "#145437", "#000000", "#F9B897", "#E68321","#DE5523","#D37D5D", "#969696","#6F0707", "#EA6E6E","#A73309", "#A06100", "#A774B8", "#CAB2D6","#3AF6FC", "#239A9E", "#156062", "#A2CACB",  "#40008C", "#E75DD6","#38A2B9", "#C3AAE1", "#9145E8", "#38871A"))+
+  geom_boxplot(alpha=0.7)+
+  theme_classic()+
+  labs(x="Log-Transformed Relative Abundance")+
+  theme(legend.position="left",axis.title.y =element_blank());p1
+```
 
-d <- psmelt(P.keyf) %>% 
-  filter(., Fertilization == 'Fertilized')
 
+
+
+
+```{r}
+dflist <- k.fert$Label
+kegg <- read_excel('data/EMU_database.GIBBs.KO.PICRUST2.xlsx', sheet='EMU_database.GIBBs.PICRUSt2', range='B9:BE17565') %>%
+  mutate_if(is.numeric, replace_na, replace=0)
+
+keggsub <- filter(kegg, Species %in% dflist) 
+
+P.rel <- readRDS('data/P.rel.RDS')
+P.sub<- subset_taxa(P.rel, species %in% dflist)
+df.sub <- psmelt(P.sub) %>% 
+  filter(.,Fertilization=='Fertilized')
+names(df.sub)[names(df.sub) == 'species'] <- 'Species'
+df.kegg <- left_join(df.sub,keggsub, by = 'Species')
+
+df<- pivot_longer(df.kegg, cols=hcnA:nosZ, names_to = 'Gene', values_to = 'value') %>%   filter(!value==0)
+
+
+d$Function <- ifelse(d$Gene=="hcnA", "Biocontrol",
+                        ifelse(d$Gene=="budA","Biocontrol",
+                               ifelse(d$Gene=="budC","Biocontrol",
+                                      ifelse(d$Gene=="E3.2.1.6","Biocontrol",                                             ifelse(d$Gene=="E3.2.1.14","Biocontrol",                                                    ifelse(d$Gene=="phlD","Biocontrol",                                                       ifelse(d$Gene=="ituA","Biocontrol",  
+                      ifelse(d$Gene=="fenA", "Biocontrol",
+                        ifelse(d$Gene=="srfAA","Biocontrol",
+                               ifelse(d$Gene=="rifM","Biocontrol",
+                                      ifelse(d$Gene=="phzE","Biocontrol",
+                                             ifelse(d$Gene=="ipdC","Stress",                                                    ifelse(d$Gene=="acdS","Stress",                                                           ifelse(d$Gene=="mbtI","Siderophore",                                                    ifelse(d$Gene=="entA", "Siderophore",
+        ifelse(d$Gene=="pchB","Siderophore",
+           ifelse(d$Gene=="bglX","C decomposition",
+              ifelse(d$Gene=="bglB","C decomposition",
+                 ifelse(d$Gene=="E3.2.1.21","C decomposition",                                          ifelse(d$Gene=="amiE","N decomposition",    
+ifelse(d$Gene=="ureC","N decomposition",                                                    ifelse(d$Gene=="pqqC", "PO4 solubility",
+        ifelse(d$Gene=="phoA","P decomposition",
+           ifelse(d$Gene=="phoD","P decomposition",
+              ifelse(d$Gene=="PHO","P decomposition",
+                 ifelse(d$Gene=="appA","P decomposition",                                          ifelse(d$Gene=="phoN","P decomposition",                             ifelse(d$Gene=="aslA","S decomposition",                                                    ifelse(d$Gene=="nifH", "N-fixation",
+        ifelse(d$Gene=="nifD","N-fixation",
+           ifelse(d$Gene=="nifK","N-fixation",
+              ifelse(d$Gene=="pmoA-amoA","Nitrification",
+                 ifelse(d$Gene=="hao","Nitrification",                                          ifelse(d$Gene=="nirB","Dissimilatory nitrate reduction",    
+ifelse(d$Gene=="nirD","Dissimilatory nitrate reduction",                                   ifelse(d$Gene=="nrfA", "Dissimilatory nitrate reduction",
+        ifelse(d$Gene=="nirA","Assimilatory nitrate reduction",
+           ifelse(d$Gene=="NIT-6","Assimilatory nitrate reduction",
+              ifelse(d$Gene=="narG","Denitrification",
+                 ifelse(d$Gene=="narH","Denitrification",                                          ifelse(d$Gene=="nirK","Denitrification",    
+ ifelse(d$Gene=="nirS","Denitrification",                                   ifelse(d$Gene=="norB", "Denitrification",
+        ifelse(d$Gene=="norC","Denitrification",
+          ifelse(d$Gene=='nosZ','Denitrification',NA)))))))))))))))))))))))))))))))))))))))))))))
+
+
+d.fert <- summarize(group_by(d, Species,Function,Gene),
+                        mean=mean(Abundance)) 
+
+
+
+```
+
+```{r}
+mod <- lm(log(mean) ~ Function/Gene, data = d.fert)
 par(mfrow=c(2,2))
-mod <- d %>% 
-  lm(sqrt(Abundance) ~ Domestication, data = .)
 plot(mod)
 aov.mod <- aov(mod)
 summary(aov.mod)
- 
-t<- HSD.test(mod, "Domestication");t
+t<- HSD.test(mod, "Function");t
+
+```
+
+
+```{r}
+p2<-ggplot(d.fert,aes(x=log(mean),y=Function))+
+  geom_point(position = 'jitter',size=3,aes(color=Gene))+
+  scale_color_manual(values = c("#EA4691", "#6BFF33", "#2929F0", "#BFE75D", "#F9FF76", "#A3A92D", "#7667A0", "#3F2B78", "#26194C", "#6A6F07", "#800080", "#610185", "#A2CACB","#A0008D", "#661AFF", "#662341", "#8942DE", "#402B47", "#8C6262", "#E20C0C", "#1BB74B", "#39FDA4", "#145437", "#000000", "#F9B897", "#E68321","#DE5523","#D37D5D", "#969696","#6F0707", "#EA6E6E","#A73309", "#A06100", "#A774B8", "#CAB2D6","#3AF6FC", "#239A9E", "#156062", "#A2CACB",  "#40008C", "#E75DD6","#38A2B9", "#C3AAE1", "#9145E8", "#38871A"))+
+  geom_boxplot(alpha=0.7)+
+  theme_classic()+
+  labs(x="Square-Root-Transformed Relative Abundance")+
+  theme(legend.position = "none", axis.title.y =element_blank());p2
+```
 
 
 
-sum.do <- summarize(group_by(d, Domestication),
+```{r}
+p <- p1+p2+plot_layout(axis_titles = "collect")+theme(axis.text.y = element_blank());p
+```
+
+
+
+```{r}
+#unfert 
+dflist <- k.unfert$Label
+P.sub<- subset_taxa(P.rel, species %in% dflist)
+df.unfert <- psmelt(P.sub) %>% 
+  filter(.,Fertilization=='Unfertilized') %>% 
+  filter(.,Abundance !=0)
+
+mod <- lm((Abundance) ~ Domestication, data=df.unfert)
+aov.mod <- aov(mod)
+summary(aov.mod)
+t <- HSD.test(mod, "Domestication");t
+
+#fert 
+dflist <- k.fert$Label
+P.sub<- subset_taxa(P.rel, species %in% dflist)
+df.fert <- psmelt(P.sub) %>% 
+  filter(.,Fertilization=='Fertilized') %>% 
+  filter(.,Abundance !=0)
+
+mod <- lm((Abundance) ~ Domestication, data=df.fert)
+aov.mod <- aov(mod)
+summary(aov.mod)
+t <- HSD.test(mod, "Domestication");t
+```
+
+```{r}
+u.sum <- summarise(group_by(df.unfert,Domestication),
                    n=n(),
-                   mean=mean(sqrt(Abundance)),
-                   sd=sd(sqrt(Abundance)),
+                   mean=mean((Abundance)),
+                   sd=sd((Abundance)),
                    se=sd/sqrt(n))
 
 
-pf <- ggplot(sum.do, aes(x=Domestication,y=mean))+
-  geom_col(position='dodge',fill='#1F78B4')+
-  geom_errorbar(aes(ymin = mean-se, ymax = mean+se),position=position_dodge(0.9), width = .25)+
-  labs(y="Keystone Taxa Relative Abundance (Square-Root-Transformed)")+
-  theme(axis.text.x=element_text(size=14, colour = "black", family='Palatino Linotype' ), 
-        axis.text.y=element_text(size=14, colour = "black",family='Palatino Linotype' ),
-        axis.line = element_line(colour = "black"),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        legend.key = element_blank(),
-        legend.text = element_text(size = 24),
-        strip.text.y = element_text(size=8, face="bold"), 
-        legend.title = element_blank(),
-        legend.position = 'none',
-        strip.text = element_blank(),
-        strip.background = element_blank(),
-       axis.title.x = element_blank()); pf
-```
+p3<- ggplot(data=u.sum)+
+  geom_col(position='dodge',aes(x=Domestication, y =mean,fill=Domestication))+
+  scale_fill_manual(values = c("#1F78B4", "#33A02C", "#E31A1C"))+
+  geom_errorbar(aes(x=Domestication,ymin = mean-se, ymax=mean+se,width = 0.3))+
+  theme_classic()+
+  labs(y="Relative Abundance of Keystone Taxa")+
+  theme(axis.title.x = element_blank(),
+        legend.position = "none");p3
+
+f.sum <- summarise(group_by(df.fert,Domestication),
+                   n=n(),
+                   mean=mean((Abundance)),
+                   sd=sd((Abundance)),
+                   se=sd/sqrt(n))
 
 
-```{r}
-p <- pu/pf;p
-```
+p4<- ggplot(data=f.sum)+
+  geom_col(position='dodge',aes(x=Domestication, y = mean,fill=Domestication))+
+  scale_fill_manual(values = c("#1F78B4", "#33A02C", "#E31A1C"))+
+  geom_errorbar(aes(x=Domestication,ymin = mean-se, ymax=mean+se,width = 0.3))+
+  theme_classic()+
+  labs(y="Relative Abundance of Keystone Taxa")+
+  theme(axis.title.x = element_blank(),
+        legend.position = "none");p4
 
 
-```{r}
-P40 <- createPalette(15, c("#FF0000", "#00FF00", "#0000FF"), range = c(30, 80))
-swatch(P40)
-P40 <- sortByHue(P40)
-P40 <- as.vector(t(matrix(P40, ncol=4)))
-swatch(P40)
-names(P40) <- NULL
-
-k <- read.csv('data/keystone.csv')
-
-
-p<-ggplot(k, aes(x=Species, y=(Function), color=GeneName)) + 
-  geom_point(size = 7) + 
-  scale_color_manual(values = P40)+
-  geom_hline(yintercept = 1.5, color='gray50')+
-  geom_hline(yintercept = 2.5, color='gray50')+
-  geom_hline(yintercept = 3.5, color='gray50')+
-  geom_hline(yintercept = 4.5, color='gray50')+
-  geom_hline(yintercept = 5.5, color='gray50')+
-  geom_hline(yintercept = 6.5, color='gray50')+
-  geom_hline(yintercept = 7.5, color='gray50')+
-  geom_hline(yintercept = 8.5, color='gray50')+
-  geom_hline(yintercept = 9.5, color='gray50')+
-  geom_hline(yintercept = 10.5, color='gray50')+
-  geom_hline(yintercept = 11.5, color='gray50')+
-  theme(axis.text.x = element_text(family = 'serif', color='black'),
-        axis.text.y = element_text( color='black',family = 'serif'),
-        legend.text = element_text( color='black',family='serif'),
-        axis.line = element_line(colour = "black"),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        legend.key = element_blank(),
-        legend.title = element_blank(),
-        strip.background = element_blank(),
-        axis.title.y = element_blank(),
-        axis.title.x = element_blank());p
+p5 <- p3/p4+plot_layout(axis_titles = "collect");p5
+theme(axis.title.y = element_blank());p5
 ```
 
